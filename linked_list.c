@@ -34,10 +34,11 @@ struct node* append(struct node* head, int data) {
       if (curr->next) {
         curr = curr->next;
       } else {
-        curr = (struct node*)malloc(sizeof(struct node));
-        curr->data = data;
-        curr->next = NULL;
-        curr = curr->next;
+        struct node* new = (struct node*)malloc(sizeof(struct node));
+        new->data = data;
+        new->next = NULL;
+        curr->next = new;
+        curr = NULL;
       }
     }
   }
@@ -57,10 +58,11 @@ int main() {
   head = NULL;
   int i;
   for (i=0; i<10; i++) {
-    curr = (struct node*)malloc(sizeof(struct node));
-    curr->data = i;
-    curr->next = head;
-    head = curr;
+    head = push(head, i);
   }
-  printf("%d\n", print_length(head));
+  for (i=10; i<20; i++) {
+    head = append(head, i);
+  }
+  printf("length: %d\n", print_length(head));
+  print_list(head);
 }
