@@ -6,12 +6,18 @@ struct node {
   struct node* next;
 };
 
+struct node* new_list() {
+  struct node* head = NULL;
+  return head;
+}
+
 void print_list(struct node* head) {
   struct node* curr = head;
   while (curr) {
-    printf("%d\n", curr->data);
+    printf("%d - ", curr->data);
     curr = curr->next;
   }
+  printf("\n");
 }
 
 int print_length(struct node* head) {
@@ -24,6 +30,7 @@ int print_length(struct node* head) {
   return count;
 }
 
+// add data to the end
 struct node* append(struct node* head, int data) {
   if (!head) {
     head->data = data;
@@ -45,6 +52,7 @@ struct node* append(struct node* head, int data) {
   return head;
 }
 
+// add data to the beginning
 struct node* push(struct node* head, int data) {
   struct node *new = (struct node*)malloc(sizeof(struct node));
   new->data = data;
@@ -53,9 +61,28 @@ struct node* push(struct node* head, int data) {
   return head;
 }
 
+// remove data from the end
+struct node* remove_last(struct node* head) {
+  struct node* curr = head;
+  while ((curr->next)->next) { // find the second to last node
+    curr = curr->next;
+  }
+  struct node* last = curr->next;
+  curr->next = NULL;
+  free(last);
+  return head;
+}
+
+struct node* remove_first(struct node* head) {
+  struct node* first = head;
+  head = first->next;
+  free(first);
+  return head;
+}
+
+// test
 int main() {
-  struct node *head, *curr;
-  head = NULL;
+  struct node* head = new_list();
   int i;
   for (i=0; i<10; i++) {
     head = push(head, i);
@@ -64,5 +91,9 @@ int main() {
     head = append(head, i);
   }
   printf("length: %d\n", print_length(head));
+  print_list(head);
+  head = remove_last(head);
+  print_list(head);
+  head = remove_first(head);
   print_list(head);
 }
