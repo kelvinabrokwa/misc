@@ -33,6 +33,7 @@ int print_length(struct node* head) {
 // add data to the end
 struct node* append(struct node* head, int data) {
   if (!head) {
+    head = (struct node*)malloc(sizeof(struct node));
     head->data = data;
     head->next = NULL;
   } else {
