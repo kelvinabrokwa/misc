@@ -46,6 +46,7 @@ void insert_node(node* root_ptr, int data) {
 }
 
 void print_tree(node* root_ptr) {
+  // damn I need a stack
   printf("%d\n", root_ptr->data);
 }
 
