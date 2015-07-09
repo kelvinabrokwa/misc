@@ -45,9 +45,15 @@ void insert_node(node* root_ptr, int data) {
   }
 }
 
-void print_tree(node* root_ptr) {
-  // damn I need a stack
-  printf("%d\n", root_ptr->data);
+void print_nodes(node* root_ptr) {
+  node* ptr = root_ptr;
+  printf("%d\n", ptr->data);
+  if (ptr->left) {
+    print_nodes(ptr->left);
+  }
+  if (ptr->right) {
+    print_nodes(ptr->right);
+  }
 }
 
 // test
@@ -55,5 +61,5 @@ int main() {
   node* tree = new_tree();
   tree = add_root(tree, 5);
   insert_node(tree, 6);
-  print_tree(tree);
+  print_nodes(tree);
 }
