@@ -83,6 +83,7 @@ struct node remove_first(struct node* head) {
   return values;
 }
 
+/*
 // test
 int main() {
   struct node* head = new_list();
@@ -101,3 +102,4 @@ int main() {
   printf("first: %d\n", first);
   print_list(head);
 }
+*/

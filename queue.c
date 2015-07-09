@@ -1,37 +1,22 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "linked_list.c"
 
-struct Node {
-  int data;
-  struct Node *next;
-};
-
-typedef struct Node node;
-
-node *front, *rear;
-
-void Enqueue(int x) {
-  node *temp = (node*)malloc(sizeof(node));
-  temp->data = x;
-  temp->next = NULL;
-  if (front == NULL && rear == NULL) {
-    front = rear = temp;
-    return;
-  }
-  rear->next = temp;
-  rear = temp;
+struct node* new_queue() {
+  return new_list();
 }
 
-void Dequeue() {
-  node *temp = front;
-  if (front == NULL) {
-    printf("queue is empty");
-    return;
-  }
-  if (front == rear) {
-    front = rear = NULL;
-  } else {
-    front = front->next;
-  }
-  free(temp);
+struct node* enqueue(struct node* head, int i) {
+  return append(head, i);
+}
+
+// dequeue an item and return it
+struct node dequeue(struct node* head) {
+  return remove_first(head);
+}
+
+// test
+int main() {
+  struct node* queue = new_queue();
+  queue = enqueue(queue, 1);
+  queue = enqueue(queue, 2);
+  print_list(queue);
 }
