@@ -31,7 +31,8 @@ int find(int i, int arr[], int len) {
 
     if (arr_cp[half_idx] > i) { // in the first half
       // decrease upper bound on range and adjust length appropriately
-      len = len_is_odd ? (int)(len/2) + 1 : (int)(len/2);
+      len = (int)(len/2);
+      if (len_is_odd) len += 1;
       range[1] = (int)(range[1] / 2);
 
     } else if (arr_cp[half_idx] < i) { // in the second half
@@ -52,9 +53,12 @@ int find(int i, int arr[], int len) {
 
 // test
 int main() {
-  int arr[8] = {0,1,2,3,4,5,6,7};
+  int arr[10] = {0,1,2,3,4,5,6,7,8,9};
   int len = sizeof(arr) / sizeof(int);
-  int idx = find(5, arr, len);
-  printf("%d\n", idx);
-  assert(idx == 5);
+  int idx, i;
+  for (i=0; i<10; i++) {
+    idx = find(i, arr, len);
+    printf("%d\n", idx);
+    assert(idx == i);
+  }
 }
