@@ -52,7 +52,7 @@ int find(int i, int arr[], int len) {
 
 // test
 int main() {
-  int arr[9] = {0,1,2,3,4,5,6,7,8};
+  int arr[8] = {0,1,2,3,4,5,6,7};
   int len = sizeof(arr) / sizeof(int);
   int idx = find(5, arr, len);
   printf("%d\n", idx);
