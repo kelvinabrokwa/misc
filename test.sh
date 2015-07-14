@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 for test in tests/*; do
-  gcc $test;
+  clang $test;
   ./a.out;
 done
