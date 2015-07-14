@@ -1,4 +1,6 @@
-// find the index of an item in an array using binary chop
+/**
+ * a terse implementation of binary chop for searching ordered arrays
+ */
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
@@ -6,29 +8,22 @@
 
 
 int find(int i, int arr[], int len) {
-  int arr_cp[len], half_idx, k, range[2] = {0, len - 1};
+  int arr_cp[len], half_idx, j, k, range[2] = {0, len - 1};
   bool len_is_odd;
 
   while (len) {
-    for (int j=range[0], k=0; j<=range[1]; j++,k++) { // update the array
-      arr_cp[k] = arr[j];
-    }
+    for (j=range[0], k=0; j<=range[1]; j++,k++) arr_cp[k] = arr[j];
 
     len_is_odd = len % 2 != 0;
-    half_idx = (int)( (range[1] - range[0]) / 2 ); // index of the last item of the first half
+    half_idx = (int)( (range[1] - range[0]) / 2 );
     len = (int)(len/2);
 
-    if (arr_cp[half_idx] > i) { // in the first half
-      range[1] -= (int)( (range[1] - range[0]) / 2 ) + 1; // decrease upper bound
-    }
-    else if (arr_cp[half_idx] < i) { // in the second half
-      range[0] += (int)( (range[1] - range[0]) / 2 ) + 1; // increase lower bound
-    }
-    else if (arr_cp[half_idx] == i) {
-      int loc = range[1] - (int)( (range[1] - range[0]) / 2 );
-      if (!len_is_odd) loc -= 1;
-      return loc;
-    }
+    if (arr_cp[half_idx] > i)
+      range[1] -= ++half_idx; // if in first half, decrement upper bound
+    else if (arr_cp[half_idx] < i)
+      range[0] += ++half_idx; // if in second half, increment lower bound
+    else if (arr_cp[half_idx] == i)
+      return len_is_odd ? range[1] - half_idx : range[1] - half_idx - 1;
   }
   return -1;
 }
