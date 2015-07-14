@@ -7,42 +7,37 @@
  * find the index of an item in an array using binary chop
  */
 
-bool is_odd(int i) {
-  return i % 2 != 0 ? true : false;
-}
+bool is_odd(int i) { return i % 2 != 0; }
 
 int find(int i, int arr[], int len) {
-  int index, arr_cp[len], half_idx, new_len, k;
+  int arr_cp[len], half_idx, new_len, k;
   bool len_is_odd;
   int range[2] = {0, len - 1};
 
   while (len > 2) {
 
-    printf("%d -> %d\n", range[0], range[1]);
     k = 0;
-    for (int j=range[0]; j<range[1]+1; j++,k++) { // update the array
+    for (int j=range[0]; j<=range[1]; j++,k++) { // update the array
       arr_cp[k] = arr[j];
     }
 
     len_is_odd = is_odd(len);
-
-    half_idx = (int)(len/2); // index of the last item of the first half
-    if (!len_is_odd) half_idx -= 1;
+    half_idx = (int)( (range[1] - range[0]) / 2); // index of the last item of the first half
+    len = (int)(len/2);
 
     if (arr_cp[half_idx] > i) { // in the first half
-      // decrease upper bound on range and adjust length appropriately
-      len = (int)(len/2);
-      if (len_is_odd) len += 1;
-      range[1] = (int)(range[1] / 2);
+      // decrease upper bound
+      range[1] -= (int)( (range[1] - range[0]) / 2 ) + 1;
 
     } else if (arr_cp[half_idx] < i) { // in the second half
-      // increase lower bound on range and adjust length appropriately
-      len = (int)(len/2);
-      range[0] = (int)(range[1] / 2) + 1;
+      // increase lower bound
+      range[0] += (int)( (range[1] - range[0]) / 2 ) + 1;
 
-    } else {
-      index = half_idx;
-      return half_idx;
+    } else if (arr_cp[half_idx] == i) {
+      int loc = range[1] - (int)( (range[1] - range[0]) / 2 );
+      if (!len_is_odd) loc -= 1;
+      return loc;
+
     }
   }
 
@@ -58,7 +53,7 @@ int main() {
   int idx, i;
   for (i=0; i<10; i++) {
     idx = find(i, arr, len);
-    printf("%d\n", idx);
+    printf("query: %d\nresponse: %d\n\n", i, idx);
     assert(idx == i);
   }
 }
