@@ -7,8 +7,6 @@ typedef struct Node {
   struct Node* right;
 } node;
 
-#include "utils/print_tree.h" // fix this
-
 node* new_tree() {
   node* root_ptr = NULL;
   return root_ptr;
@@ -45,15 +43,3 @@ void insert_node(node* root_ptr, int data) {
   }
 }
 
-
-// test
-int main() {
-  node* tree = new_tree();
-  tree = add_root(tree, 5);
-  insert_node(tree, 6);
-  insert_node(tree, 6);
-  insert_node(tree, 4);
-  insert_node(tree, 2);
-  insert_node(tree, 8);
-  print_tree(tree);
-}
