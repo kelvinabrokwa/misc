@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct Node {
+typedef struct Node {
   int data;
   struct Node* left;
   struct Node* right;
-};
+} node;
 
-typedef struct Node node;
+#include "utils/print_tree.h" // fix this
 
 node* new_tree() {
   node* root_ptr = NULL;
@@ -45,21 +45,15 @@ void insert_node(node* root_ptr, int data) {
   }
 }
 
-void print_nodes(node* root_ptr) {
-  node* ptr = root_ptr;
-  printf("%d\n", ptr->data);
-  if (ptr->left) {
-    print_nodes(ptr->left);
-  }
-  if (ptr->right) {
-    print_nodes(ptr->right);
-  }
-}
 
 // test
 int main() {
   node* tree = new_tree();
   tree = add_root(tree, 5);
   insert_node(tree, 6);
-  print_nodes(tree);
+  insert_node(tree, 6);
+  insert_node(tree, 4);
+  insert_node(tree, 2);
+  insert_node(tree, 8);
+  print_tree(tree);
 }
