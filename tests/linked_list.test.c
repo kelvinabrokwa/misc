@@ -1,7 +1,7 @@
 #include "../linked_list.c"
 
-int print_length(struct node* head) {
-  struct node* curr = head;
+int print_length(node* head) {
+  node* curr = head;
   int count = 0;
   while (curr) {
     curr = curr->next;
@@ -10,8 +10,8 @@ int print_length(struct node* head) {
   return count;
 }
 
-void print_list(struct node* head) {
-  struct node* curr = head;
+void print_list(node* head) {
+  node* curr = head;
   while (curr) {
     printf("%d - ", curr->data);
     curr = curr->next;
@@ -20,7 +20,7 @@ void print_list(struct node* head) {
 }
 
 int main() {
-  struct node* head = new_list();
+  node* head = new_list();
   int i;
   for (i=0; i<10; i++) {
     head = push(head, i);
@@ -30,7 +30,7 @@ int main() {
   printf("length: %d\n", print_length(head));
   printf("last: %d\n", remove_last(head));
   print_list(head);
-  struct node pop_results = remove_first(head);
+  node pop_results = remove_first(head);
   head = pop_results.next;
   int first = pop_results.data;
   printf("first: %d\n", first);
