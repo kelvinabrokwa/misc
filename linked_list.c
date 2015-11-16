@@ -1,68 +1,78 @@
+/**
+ * Singly linked list implementation (with sentinel nodes)
+ *
+ * Methods
+ * - append: add to the end of the list (1 -> 2 -> 3 becomes 1 -> 2 -> 3 -> 4)
+ * - push: add to the beginning of the list (1 -> 2 -> 3 becomes 4 -> 1 -> 2 -> 3)
+ * - pop_front: remove and return the first element in the lsit (1 -> 2 -> 3 returns 1)
+ * - pop_back: remove and return the last element in the list (1 -> 2 -> 3 returns 3)
+ * - peek_front: return the first element in the list (1 -> 2 -> 3 returns 1)
+ * - peek_back: return the last element in the list (1 -> 2 -> 3  returns 3)
+ * -
+ */
 #include <stdlib.h>
 #include <stdio.h>
 
 struct Node {
-  int data;
-  struct Node* next;
+    int data;
+    struct Node* next;
 };
 
 typedef struct Node node;
 
 node* new_list() {
-  node* head = NULL;
-  return head;
+    node* trailer = (node*)malloc(sizeof(node));
+    node* header = (node*)malloc(sizeof(node));
+    header->next = trailer;
+    return header;
 }
 
-// add data to the end
-node* append(node* head, int data) {
-  if (!head) {
-    head = (node*)malloc(sizeof(node));
-    head->data = data;
-    head->next = NULL;
-  } else {
-    node* curr = head;
-    while (curr) {
-      if (curr->next) {
+node* append(node* header, int data) {
+    node* curr = header;
+    while (curr->next->data) {
         curr = curr->next;
-      } else {
-        node* new = (node*)malloc(sizeof(node));
-        new->data = data;
-        new->next = NULL;
-        curr->next = new;
-        curr = NULL;
-      }
     }
-  }
-  return head;
+    node new = { .data = data, .next = curr->next };
+    curr->next = &new;
+    return header;
 }
 
-// add data to the beginning
-node* push(node* head, int data) {
-  node *new = (node*)malloc(sizeof(node));
-  new->data = data;
-  new->next = head;
-  head = new;
-  return head;
+node* push(node* header, int data) {
+    node* new = (node*)malloc(sizeof(node));
+    new->next = header->next;
+    header->next = new;
+    return header;
 }
 
-// remove data from the end and return it
-int remove_last(node* head) {
-  node* curr = head;
-  while ((curr->next)->next) { // find the second to last node
-    curr = curr->next;
-  }
-  node* last = curr->next;
-  curr->next = NULL;
-  int data = last->data;
-  free(last);
-  return data;
+int pop_front(node* header) {
+    node* n = header-> next;
+    int data = n->data;
+    header->next = n->next;
+    free(n);
+    return data;
 }
 
-
-// remove data from the beginning and return the new head and the data
-// this is wonky, I'm abusing the Node struct but YOLO right?
-node remove_first(node* head) {
-  node values = { head->data, head->next };
-  free(head);
-  return values;
+int pop_back(node* header) {
+    node* curr = header;
+    while (curr->next->next->data) {
+        curr = curr->next;
+    }
+    node* n = curr->next;
+    int data = n->data;
+    curr->next = curr->next->next;
+    free(n);
+    return data;
 }
+
+int peek_front(node* header) {
+    return header->next->data;
+}
+
+int peek_back(node* header) {
+    node* curr = header;
+    while (curr->next->data) {
+        curr = curr->next;
+    }
+    return curr->data;
+}
+
