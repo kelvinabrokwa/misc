@@ -22,16 +22,22 @@ void print_list(node* list) {
 
 int main() {
     node* list = new_list();
+
     int i;
     for (i=0; i<10; i++) {
         append(list, i);
     }
-    print_list(list);
     for (i=0; i<10; i++) {
         push(list, i*10);
     }
-    print_list(list);
+
     assert(get_length(list) == 20);
+
     assert(peek_front(list) == 90);
+    assert(pop_front(list) == 90);
+    assert(peek_front(list) == 80);
+
     assert(peek_back(list) == 9);
+    assert(pop_back(list) == 9);
+    assert(peek_back(list) == 8);
 }

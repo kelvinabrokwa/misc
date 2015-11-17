@@ -4,10 +4,14 @@ node* new_queue() {
   return new_list();
 }
 
-node* enqueue(node* head, int i) {
-  return append(head, i);
+node* enqueue(node* list, int i) {
+  return append(list, i);
 }
 
-node dequeue(node* head) {
-  return remove_first(head);
+int dequeue(node* list) {
+  return pop_front(list);
+}
+
+int queue_peek(node* list) {
+    return peek_front(list);
 }
