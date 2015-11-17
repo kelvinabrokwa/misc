@@ -32,4 +32,6 @@ int main() {
     }
     print_list(list);
     assert(get_length(list) == 20);
+    assert(peek_front(list) == 90);
+    assert(peek_back(list) == 9);
 }
