@@ -21,24 +21,25 @@ struct Node {
 typedef struct Node node;
 
 node* new_list() {
-    node* trailer = (node*)malloc(sizeof(node));
     node* header = (node*)malloc(sizeof(node));
-    header->next = trailer;
+    header->next = NULL;
     return header;
 }
 
 node* append(node* header, int data) {
     node* curr = header;
-    while (curr->next->data) {
+    while (curr->next != NULL) {
         curr = curr->next;
     }
-    node new = { .data = data, .next = curr->next };
-    curr->next = &new;
+    curr->next = (node*)malloc(sizeof(node));
+    curr->next->data = data;
+    curr->next->next = NULL;
     return header;
 }
 
 node* push(node* header, int data) {
     node* new = (node*)malloc(sizeof(node));
+    new->data = data;
     new->next = header->next;
     header->next = new;
     return header;
@@ -54,7 +55,7 @@ int pop_front(node* header) {
 
 int pop_back(node* header) {
     node* curr = header;
-    while (curr->next->next->data) {
+    while (curr->next->next != NULL) {
         curr = curr->next;
     }
     node* n = curr->next;
@@ -70,7 +71,7 @@ int peek_front(node* header) {
 
 int peek_back(node* header) {
     node* curr = header;
-    while (curr->next->data) {
+    while (curr->next != NULL) {
         curr = curr->next;
     }
     return curr->data;
