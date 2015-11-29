@@ -12,4 +12,10 @@ int main() {
   assert(tree->left->data == 4);
   assert(tree->right->data == 6);
   assert(tree->left->left->data == 3);
+
+  delete(&tree, 5);
+  assert(tree->data == 6);
+
+  delete(&tree, 4);
+  assert(tree->left->data == 3);
 }
